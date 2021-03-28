@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Lab04_TicTacToe.Classes
 {
-	class Game
+	public class Game
 	{
 		public Player PlayerOne { get; set; }
 		public Player PlayerTwo { get; set; }
@@ -31,7 +31,7 @@ namespace Lab04_TicTacToe.Classes
 		public Player Play()
 		{
 
-			//TODO: Complete this method and utilize the rest of the class structure to play the game.
+            //TODO: Complete this method and utilize the rest of the class structure to play the game.
 
             /*
              * Complete this method by constructing the logic for the actual playing of Tic Tac Toe. 
@@ -47,6 +47,22 @@ namespace Lab04_TicTacToe.Classes
 
             Use any and all pre-existing methods in this program to help construct the method logic. 
              */
+
+            for (int turnNum = 0; turnNum < 9; turnNum++)
+            {
+				Board.DisplayBoard();
+				SwitchPlayer();
+				NextPlayer().TakeTurn(Board);
+
+				if(CheckForWinner(Board))
+                {
+					Winner = NextPlayer();
+					return Winner;
+                }
+
+			}
+			Board.DisplayBoard();
+			return Winner;
 		}
 
 
@@ -55,7 +71,7 @@ namespace Lab04_TicTacToe.Classes
 		/// </summary>
 		/// <param name="board">current state of the board</param>
 		/// <returns>if winner exists</returns>
-		public bool CheckForWinner(Board board)
+		public static bool CheckForWinner(Board board)
 		{
 			int[][] winners = new int[][]
 			{
@@ -78,12 +94,17 @@ namespace Lab04_TicTacToe.Classes
 				Position p2 = Player.PositionForNumber(winners[i][1]);
 				Position p3 = Player.PositionForNumber(winners[i][2]);
 
-				string a = Board.GameBoard[p1.Row, p1.Column];
-				string b = Board.GameBoard[p2.Row, p2.Column];
-				string c = Board.GameBoard[p3.Row, p3.Column];
+				// Changed Board to board 
+				string a = board.GameBoard[p1.Row, p1.Column];
+				string b = board.GameBoard[p2.Row, p2.Column];
+				string c = board.GameBoard[p3.Row, p3.Column];
 
 				// TODO:  Determine a winner has been reached. 
 				// return true if a winner has been reached. 
+				if(a == b && b == c)
+                {
+					return true;
+                }
 			
 			}
 
@@ -109,8 +130,6 @@ namespace Lab04_TicTacToe.Classes
 			{
               
 				PlayerOne.IsTurn = false;
-
-              
 				PlayerTwo.IsTurn = true;
 			}
 			else

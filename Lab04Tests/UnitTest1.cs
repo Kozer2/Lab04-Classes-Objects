@@ -72,7 +72,7 @@ namespace Lab04Tests
             // assert
 
 
-            Assert.Equal(result, result);
+            Assert.Equal(new Position(0,1), result);
 
         }
 

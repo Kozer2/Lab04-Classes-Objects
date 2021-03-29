@@ -14,27 +14,28 @@ namespace Lab04Tests
         {
             // arrange
             Board board = new Board();
-
-            // act
             board.GameBoard[0, 0] = "x";
             board.GameBoard[0, 1] = "x";
             board.GameBoard[0, 2] = "x";
 
+            // act
+            bool result = Game.CheckForWinner(board);
+
             // assert
-            Assert.True(Game.CheckForWinner(board));
+            Assert.True(result);
         }
 
         // test if no winners works
         [Fact]
-        public void Game_board_test_if__no_winner_works()
+        public void Game_board_test_if_no_winner_works()
         {
             // arrange
             Board board = new Board();
 
             // act
-
+            bool result = Game.CheckForWinner(board);
             // assert
-            Assert.False(Game.CheckForWinner(board));
+            Assert.False(result);
         }
 
 
@@ -56,23 +57,55 @@ namespace Lab04Tests
         }
 
 
-        // test if game tracks the position on the board
-        [Fact(Skip = "Should pass but doesn't")]
-        public void Game_tracks_player_position()
+        // test if game tracks the position on the board with invalid input 
+        [Theory]
+        [InlineData(11)]
+        [InlineData(10)]
+        [InlineData(30)]
+        public void Game_tracks_player_position_null_return(int position)
         {
             // arrange
-            Board board = new Board();
+            /*Board board = new Board();
             Game game = new Game(new Player(), new Player());
-            int position = 2;
+            int position = 2;*/
+
+
 
             // act
-            game.SwitchPlayer();
+            /*game.SwitchPlayer();
             var result = Player.PositionForNumber(position);
-            string mark = "x";
+            string mark = "x";*/
+
+            Position result = Player.PositionForNumber(position);
             // assert
 
 
-            Assert.Equal(new Position(0,1), result);
+            Assert.Null(result);
+
+        }
+
+
+        // test if game tracks the position on the board
+        [Theory]
+        [InlineData(1, 0,0)]
+        [InlineData(2, 0,1)]
+        [InlineData(3, 0,2)]
+        public void Game_tracks_player_position(int position, int expectedRow, int expectedColumn)
+        {
+            // arrange
+            // from input
+
+
+
+            // act
+            Position result = Player.PositionForNumber(position);
+
+            // assert
+
+            Assert.Equal(expectedRow, result.Row);
+            Assert.Equal(expectedColumn, result.Column);
+
+           
 
         }
 
